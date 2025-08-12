@@ -41,3 +41,54 @@ export const registerUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const loginUser = async (req, res, next) => {
+  const { name, password } = req.body;
+  try {
+    if (!name || !password) {
+      return next(createHttpError(400, "Username or password is missing"));
+    }
+    //find user - password is hidden by default, using select method brings it back
+    const user = await User.findOne({ name }).select("+password");
+    if (!user) {
+      return next(createHttpError(404, "Account not found"));
+    }
+    //handle password check
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return next(createHttpError(401, "Invalid credentials"));
+    }
+    //if all checks out, genrate and send accessToken
+    const accessToken = generateAccessToken(user._id, user.role);
+    res.status(200).json({
+      success: true,
+      accessToken,
+      message: `Welcome ${user.name}`,
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const changeToAdmin = async (req, res, next) => {
+  const { role } = req.body;
+
+
+  const { id } = req.params;
+  try {
+    if (!role) return next(createHttpError(400, "Role is requires"));
+
+    const updatedUser = await User.findByIdAndUpdate(id, { role }, { new: true });
+
+    if (!updatedUser) {
+      return next(createHttpError(404, "User not found"));
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Role changed", user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};

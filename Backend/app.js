@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import createHttpError, { isHttpError } from "http-errors";
 import userRoutes from "./src/routes/user.js";
+import postRoute from "./src/routes/post.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/", (_, res) => {
 });
 
 app.use("/api/auth", userRoutes);
+app.use("/api/post", postRoute);
 
 //handle route errors
 app.use((req, _, next) => {

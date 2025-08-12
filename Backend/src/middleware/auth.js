@@ -25,12 +25,8 @@ export const verifyToken = async (req, res, next) => {
 };
 
 //authorised roles
-export const authorizeRoles = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return next(createHttpError(403, "User unathorized for this request"));
-    }
-    //use next handler to call whats supposed to happen after running the checks
-    next();
-  };
+export const isAdmin = (req, res, next) => {
+  if (req.user.role !== "admin")
+    return res.status(403).json({ status: "error", message: "Forbidden" });
+  next();
 };
