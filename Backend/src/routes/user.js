@@ -8,6 +8,6 @@ router.post("/register", registerUser);
 
 router.post("/login", loginUser);
 
-router.post("/changeRole/:id", verifyToken, changeToAdmin);
+router.patch("/changeRole/:id", verifyToken, changeToAdmin);
 
 export default router;
