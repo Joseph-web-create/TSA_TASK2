@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 
 const mongoUri = process.env.MONGODB_URI;
 
-console.log(mongoUri);
-
 if (!mongoUri) {
   throw new Error("MONGO_URI environment variable is not defined");
 }
@@ -19,7 +17,7 @@ const connectToDb = async () => {
     }
     //try to connect to db if we are not connected
     const db = await mongoose.connect(mongoUri, {
-      dbName: "instaclone",
+      dbName: "Crud",
       serverSelectionTimeoutMS: 45000,
       socketTimeoutMS: 5000,
     });
