@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.disable("x-powered-by"); //disable tech stack
 
 app.get("/", (_, res) => {
-  res.send("Hi");
+  res.send("Hi TSA");
 });
 
 app.use("/api/auth", userRoutes);

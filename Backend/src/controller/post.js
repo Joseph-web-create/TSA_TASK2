@@ -57,7 +57,7 @@ export const deletePost = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const deletedPost = Post.findByIdAndDelete(id);
+    const deletedPost = await Post.findByIdAndDelete(id);
 
     if (!deletedPost) return next(createHttpError(404, "Post not found"));
 
