@@ -43,119 +43,7 @@ admin → has elevated permissions
 
 Role can be updated by an admin via the /changeRole/:id endpoint.
 
---
 
-📚 API Endpoints
-
-1: Signup
-POST /api/auth/register
-
-{
-"name":"Joe",
-"email":"aace.com"
-"password": "12345"
-}
-
-✅ Response
-
-{
-"success": true,
-"message": "Account created successfully",
-"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWI4ZDEzNjlmZDAzMWU4MDgwZGNjMCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU1MDI0NjU5LCJleHAiOjE3NTUwMjgyNTl9.aPCueRjYr_HLeYSLh4mGTPIOqVf44JdEvdaeRXKHyPo"
-}
-
-2: Login
-POST /api/auth/login
-
-{
-"name":"Joe",
-"password": "12345"
-}
-
-✅ Response
-
-{
-"success": true,
-"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OWI3MWE4NDQwYjg2NGU0YzBiNTdiNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NTAyMjgyNCwiZXhwIjoxNzU1MDI2NDI0fQ.AI2roH41klSPmvQVMMtzcxtrN0nGP4QMmjvpQMJdzB0",
-"message": "Welcome Joe",
-"user": {
-"\_id": "689b71a8440b864e4c0b57b5",
-"name": "Joe",
-"email": "aace.com",
-"password": "$2b$10$1Eej8WMk.GHaTGlBmVRQQOQN/iX5BfdIyKhc7DhRjBgG0UlqELjI.",
-"role": "admin",
-"createdAt": "2025-08-12T16:54:00.713Z",
-"updatedAt": "2025-08-12T18:17:48.008Z",
-"\_\_v": 0
-}
-}
-
-3: Change Role
-
-PATCH /api/auth/changeRole/:id
-
-{
-"role":"admin"
-}
-
-✅ Response
-
-{
-"success": true,
-"message": "Role changed",
-"user": {
-"\_id": "689b71a8440b864e4c0b57b5",
-"name": "Joe",
-"email": "aace.com",
-"role": "admin",
-"createdAt": "2025-08-12T16:54:00.713Z",
-"updatedAt": "2025-08-12T18:55:20.816Z",
-"\_\_v": 0
-}
-}
-
-## Posts API
-
-POST /api/posts/createPost
-
-Authorization: Bearer <jwt-token>(admin only)
-
-{
-"title":"Mango",
-"content": "jddjddiodiodiod",
-"author":"Bliss"
-}
-
-✅ Response
-
-{
-"success": true,
-"message": "Post created successfully",
-"post": {
-"title": "Mango",
-"content": "jddjddiodiodiod",
-"author": "Bliss",
-"\_id": "689b8674552b9fe37d3b28bf",
-"\_\_v": 0
-}
-}
-
-GET /api/posts/getAllPosts
-
-Authorization: Bearer <jwt-token>
-
-{
-"success": true,
-"posts": [
-{
-"_id": "689b8674552b9fe37d3b28bf",
-"title": "Mango",
-"content": "jddjddiodiodiod",
-"author": "Bliss",
-"__v": 0
-}
-]
-}
 
 Authentication Flow
 Signup/Login → User gets JWT token.
@@ -169,3 +57,56 @@ Node.js & Express
 MongoDB & Mongoose
 JWT for authentication
 bcrypt for password hashing
+
+
+
+
+
+### Register User Endpoint
+
+This endpoint allows users to register a new account by providing their personal details. Upon successful registration, the user will receive an access token for authentication in subsequent requests.
+
+#### Request
+
+- **Method:** POST
+    
+- **URL:** [https://tsa-task2-1.onrender.com/api/auth/registerEndFragment](https://tsa-task2-1.onrender.com/api/auth/registerEndFragment)
+    
+- **Content-Type:** application/json
+    
+
+#### Request Body Parameters
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `name` | string | The full name of the user. |
+| `email` | string | The email address of the user. |
+| `password` | string | The password for the user account. |
+
+#### Expected Response
+
+- **Status Code:** 201 Created
+    
+- **Content-Type:** application/json
+    
+
+#### Response Body
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `success` | boolean | Indicates if the registration was successful. |
+| `message` | string | A message providing additional information (if any). |
+| `accessToken` | string | A token used for authenticating subsequent requests. |
+
+#### Notes
+
+- Ensure that the email provided is unique and valid to avoid registration errors.
+    
+- The password should meet security standards (e.g., minimum length, complexity).
+    
+- The `accessToken` returned in the response is crucial for user authentication in future API calls.
+
+
+see more here:
+
+https://documenter.getpostman.com/view/43530078/2sB3BGGUnr
