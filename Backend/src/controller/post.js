@@ -33,3 +33,40 @@ export const getAllPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updatePost = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedPost) return next(createHttpError(404, "Post not found"));
+
+    res
+      .status(200)
+      .json({ success: true, message: "Post updated", post: updatedPost });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deletePost = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const deletedPost = Post.findByIdAndDelete(id);
+
+    if (!deletedPost) return next(createHttpError(404, "Post not found"));
+
+    res.status(200).json({
+      success: true,
+      message: "Post deleted successfully",
+      deletedPost,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

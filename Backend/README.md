@@ -23,6 +23,8 @@ https://github.com/Joseph-web-create/TSA_TASK2
 
 npm install
 
+npm run dev
+
 create .env
 
 MONGO_URI=your_mongodb_connection_string
