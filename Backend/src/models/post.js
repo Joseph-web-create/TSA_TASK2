@@ -14,7 +14,7 @@ const postSchema = new Schema(
       trim: true,
     },
 
-    author: { type: Schema.types.ObjectId, ref: "User", required: true },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
