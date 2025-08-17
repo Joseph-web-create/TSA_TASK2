@@ -27,6 +27,11 @@ export const verifyToken = async (req, res, next) => {
 //authorised roles
 export const isAdmin = (req, res, next) => {
   if (req.user.role !== "admin")
-    return res.status(403).json({ status: "error", message: "Forbidden" });
+    return res
+      .status(403)
+      .json({
+        status: "error",
+        message: "Forbidden: only admin can create a post",
+      });
   next();
 };

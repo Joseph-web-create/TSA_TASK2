@@ -64,7 +64,6 @@ export const loginUser = async (req, res, next) => {
       success: true,
       accessToken,
       message: `Welcome ${user.name}`,
-      user,
     });
   } catch (error) {
     next(error);
@@ -74,12 +73,15 @@ export const loginUser = async (req, res, next) => {
 export const changeToAdmin = async (req, res, next) => {
   const { role } = req.body;
 
-
   const { id } = req.params;
   try {
     if (!role) return next(createHttpError(400, "Role is requires"));
 
-    const updatedUser = await User.findByIdAndUpdate(id, { role }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { role },
+      { new: true }
+    );
 
     if (!updatedUser) {
       return next(createHttpError(404, "User not found"));
