@@ -62,7 +62,7 @@ export const updatePost = async (req, res, next) => {
     const updatedPost = await Post.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
-    });
+    }).populate("author", "name email");
 
     if (!updatedPost) return next(createHttpError(404, "Post not found"));
 
@@ -86,7 +86,10 @@ export const deletePost = async (req, res, next) => {
     if (!id) {
       return next(createHttpError(400, "Post id is required"));
     }
-    const deletedPost = await Post.findByIdAndDelete(id);
+    const deletedPost = await Post.findByIdAndDelete(id).populate(
+      "author",
+      "name email"
+    );
 
     if (!deletedPost) return next(createHttpError(404, "Post not found"));
 
