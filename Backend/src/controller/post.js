@@ -4,7 +4,7 @@ import Post from "../models/post.js";
 export const createPost = async (req, res, next) => {
   const { title, content } = req.body;
 
-  const author = req.user.id;
+  const author = req.user?.id;
   const user = req.user;
 
   try {
