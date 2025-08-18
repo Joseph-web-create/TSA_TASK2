@@ -109,4 +109,4 @@ This endpoint allows users to register a new account by providing their personal
 
 see more here:
 
-https://documenter.getpostman.com/view/43530078/2sB3BGGUnr
+https://documenter.getpostman.com/view/43530078/2sB3BHn9ZJ
