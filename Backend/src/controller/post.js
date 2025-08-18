@@ -8,7 +8,7 @@ export const createPost = async (req, res, next) => {
   const user = req.user;
 
   try {
-    if (!title || !content || !author) {
+    if (!title || !content) {
       return next(
         createHttpError(400, "Title, content, and author are required")
       );
@@ -20,14 +20,12 @@ export const createPost = async (req, res, next) => {
       author,
     });
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Post created successfully",
-        post,
-        user,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Post created successfully",
+      post,
+      user,
+    });
   } catch (error) {
     next(error);
   }
