@@ -58,12 +58,16 @@ export const loginUser = async (req, res, next) => {
     if (!isPasswordValid) {
       return next(createHttpError(401, "Invalid credentials"));
     }
+
+    const safeUser = await User.findById(user._id).select("-password");
+
     //if all checks out, genrate and send accessToken
     const accessToken = generateAccessToken(user._id, user.role);
     res.status(200).json({
       success: true,
       accessToken,
       message: `Welcome ${user.name}`,
+      safeUser,
     });
   } catch (error) {
     next(error);
