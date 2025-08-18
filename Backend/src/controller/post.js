@@ -5,6 +5,7 @@ export const createPost = async (req, res, next) => {
   const { title, content } = req.body;
 
   const author = req.user._id;
+  const user = req.user;
 
   try {
     if (!title || !content || !author) {
@@ -21,7 +22,12 @@ export const createPost = async (req, res, next) => {
 
     res
       .status(201)
-      .json({ success: true, message: "Post created successfully", post });
+      .json({
+        success: true,
+        message: "Post created successfully",
+        post,
+        user,
+      });
   } catch (error) {
     next(error);
   }
