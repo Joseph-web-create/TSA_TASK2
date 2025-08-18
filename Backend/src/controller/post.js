@@ -5,7 +5,6 @@ export const createPost = async (req, res, next) => {
   const { title, content } = req.body;
 
   const author = req.user?.id;
-  const user = req.user;
 
   if (!author) {
     return next(createHttpError(401, "Unauthorized, no user ID found"));
@@ -26,7 +25,6 @@ export const createPost = async (req, res, next) => {
       success: true,
       message: "Post created successfully",
       post,
-      user,
     });
   } catch (error) {
     next(error);
