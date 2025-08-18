@@ -7,6 +7,10 @@ export const createPost = async (req, res, next) => {
   const author = req.user?.id;
   const user = req.user;
 
+  if (!author) {
+    return next(createHttpError(401, "Unauthorized, no user ID found"));
+  }
+
   try {
     if (!title || !content) {
       return next(createHttpError(400, "Title and content are required"));
