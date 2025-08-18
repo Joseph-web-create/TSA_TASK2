@@ -42,7 +42,7 @@ export const getOnePost = async (req, res, next) => {
     return next(createHttpError(400, "Post id is required"));
   }
   try {
-    const post = await Post.findById(id).populate("author", "name, email");
+    const post = await Post.findById(id).populate("author", "name email");
 
     if (!post) return next(createHttpError(404, "Post not found"));
 
