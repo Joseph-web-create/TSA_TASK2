@@ -63,7 +63,7 @@ export const loginUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       accessToken,
-      message: `Welcome ${user.fistName}`,
+      message: `Welcome ${user.firstName}`,
       safeUser,
     });
   } catch (error) {
