@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 
 router.post("/login", loginUser);
-
+router.get("/user", verifyToken, getUser);
 router.patch("/changeRole/:id", verifyToken, changeToAdmin);
 
 export default router;

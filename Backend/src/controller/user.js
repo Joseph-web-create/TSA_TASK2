@@ -71,6 +71,18 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
+export const getUser = async (req, res, next) => {
+  const userId = req.user.id;
+  try {
+    if (!userId) return next(createHttpError(400, "User not found"));
+    const user = await User.findById(userId);
+    if (!user) return next(404, "user does not exits");
+    res.status(200).json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const changeToAdmin = async (req, res, next) => {
   const { role } = req.body;
 
