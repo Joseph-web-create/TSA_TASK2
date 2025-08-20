@@ -1,9 +1,14 @@
 import { Schema, model } from "mongoose";
 const userSchema = new Schema(
   {
-    name: {
+    firstName: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "First Name is required"],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, "Last Name is required"],
       trim: true,
     },
     email: {
@@ -13,6 +18,12 @@ const userSchema = new Schema(
       trim: true,
     },
     password: {
+      type: String,
+      required: [true, "Password is required"],
+      select: false, //prevent this field from being sent to the client,
+      minLength: [5, "Password must be at least 5 characters"],
+    },
+    ConfirmPassword: {
       type: String,
       required: [true, "Password is required"],
       select: false, //prevent this field from being sent to the client,

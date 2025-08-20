@@ -4,19 +4,14 @@ import createHttpError from "http-errors";
 import { generateAccessToken } from "../config/generateJWT.js";
 
 export const registerUser = async (req, res, next) => {
-  const { name, email, password } = req.body; //get info from client via form
+  const { firstName, lastName, email, password } = req.body; //get info from client via form
   try {
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !password) {
       return next(createHttpError(400, "All Fields are required"));
     }
     //check if user already exists in db
-    const [existingUsername, existingEmail] = await Promise.all([
-      User.findOne({ name }),
-      User.findOne({ email }),
-    ]);
-    if (existingUsername) {
-      return next(createHttpError(409, "Username already exists"));
-    }
+    const existingEmail = await User.findOne({ email });
+
     if (existingEmail) {
       return next(createHttpError(409, "Email already exists"));
     }
@@ -25,9 +20,11 @@ export const registerUser = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, salt); //encrypt the user password
     //proceed to create the user
     const user = await User.create({
-      name,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
+      ConfirmPassword: hashedPassword,
     });
 
     const accessToken = generateAccessToken(user._id, user.role);
@@ -43,13 +40,13 @@ export const registerUser = async (req, res, next) => {
 };
 
 export const loginUser = async (req, res, next) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
   try {
-    if (!name || !password) {
+    if (!email || !password) {
       return next(createHttpError(400, "Username or password is missing"));
     }
     //find user - password is hidden by default, using select method brings it back
-    const user = await User.findOne({ name }).select("+password");
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return next(createHttpError(404, "Account not found"));
     }
