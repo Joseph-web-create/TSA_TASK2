@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 app.use(json({ limit: "25mb" })); //parses requests to client side in json body format
-
+app.use(express.json());
 app.use(cors(corsOptions)); //allows external origin points to communicate with server
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.disable("x-powered-by"); //disable tech stack
