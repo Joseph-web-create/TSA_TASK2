@@ -2,10 +2,23 @@ import express, { json } from "express";
 import createHttpError, { isHttpError } from "http-errors";
 import userRoutes from "./src/routes/user.js";
 import postRoute from "./src/routes/post.js";
+import cors from "cors";
 
 const app = express();
 
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://instagram-clone-mu-ten.vercel.app",
+  ],
+  optionsSuccessStatus: 200,
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+  credentials: true,
+};
+
 app.use(json({ limit: "25mb" })); //parses requests to client side in json body format
+
+app.use(cors(corsOptions)); //allows external origin points to communicate with server
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.disable("x-powered-by"); //disable tech stack
 
