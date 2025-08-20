@@ -107,3 +107,8 @@ export const changeToAdmin = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const logout = async (req, res, next) => {
+  res.status(200).json({ message: "Logged out successfully" });
+};
